@@ -173,3 +173,26 @@ Check the Data Source in the Styra DAS UI.  A new Data Source with the name `myg
 ```
 
 The `_data`, `_packages` and `_signatures` fields are special metadata fields maintained by Styra DAS.  The raw JSON data (e.g. `bardata` and `foodata`) will be visible.
+
+### 6. Import the Data Sources into the Policy
+The `rules.rego` file within this repository contains example rules that demonstrate importing data from the Data Sources (both Rest-based and Git-based), and using the data within policy rules
+```
+package rules
+
+import data.dataset as restdatasource
+import data.mygitdatasource as gitdatasource
+
+default allow = false
+
+allow {
+  restdatasource.key == "foo"
+}
+
+allow {
+  gitdatasource.foodata.key == "gitfoo"
+}
+
+allow {
+  gitdatasource.bardata.key == "gitbar"
+}
+```
