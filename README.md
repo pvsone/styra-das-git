@@ -4,7 +4,7 @@ An example to demonstrate how to connect a Styra DAS Custom System to Git for bo
 
 ## Setup
 Set environment variables for use in the `curl` commands in the steps below:
-```
+```bash
 export STYRA_ORGANIZATION_ID="<TENANT>.styra.com"
 export STYRA_TOKEN="<API_TOKEN>"
 ```
@@ -14,7 +14,7 @@ export STYRA_TOKEN="<API_TOKEN>"
 _Reference doc (replace TENANT with your tenant name):_ https://TENANT.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
 
 ### 1. Create a Styra Secret for your Git credentials
-```
+```bash
 curl -X PUT \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -25,7 +25,7 @@ curl -X PUT \
 * The secret will be named `mygitsecret`.  You can provide any name value you prefer.
 
 ### 2. Create a Custom System with Git integration enabled
-```
+```bash
 cat <<EOF > system.json
 {
   "name": "mysystem",
@@ -44,7 +44,7 @@ EOF
 * Update the `url` and `path` (and any other) values as appropriate for your environment.
 * The system will be named `mysystem`.  You can provide any name value you prefer.
 
-```
+```bash
 curl \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -54,7 +54,7 @@ curl \
 
 ### 3. (Optional) Update the default Rest-based Data Source
 For a Custom System type, Styra DAS creates a default Rest-based Data Source named `dataset`, which can be updated via the Styra DAS API:
-```
+```bash
 # get the system id for the created system, either from the JSON of the system create command, or from the DAS UI.
 export STYRA_SYSTEM_ID=<mysystem-id-value>
 
@@ -66,7 +66,7 @@ curl -X PUT \
 ```
 
 Styra DAS will begin to synchronize the Rego policy files into `mysystem`.  Within a minute or two, the following Git status will appear under the Status tab, and the `rules.rego` file contents will be updated appropriately
-```
+```json
 {
   "code": "sync_successful",
   "files_synced": [
@@ -81,7 +81,7 @@ Styra DAS will begin to synchronize the Rego policy files into `mysystem`.  With
 
 ### 4. (Optional) Create another Rest-based Data Source
 You can create as many Data Sources as you like.  Rest-based Data Sources can be created via the UI or via the DAS API, and will be fully visible in the UI.
-```
+```bash
 curl -X PUT \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -96,7 +96,7 @@ Note that the Data Source name, e.g. `anotherds`, can also be a path-based value
 
 _Reference doc:_ https://TENANT.styra.com/v1/docs/policy-authoring/datasources/overview/#git-data-sources
 
-```
+```bash
 cat <<EOF > datasource.json
 {
   "category": "git/rego",
@@ -117,7 +117,7 @@ curl -X PUT \
 * The datasource will be named `mygitdatasource`.  You can provide any name value you prefer.
 
 Check the Status of the Data Source via the API.  Look for a `status.code` value of `finished`.
-```
+```bash
 curl \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -151,7 +151,7 @@ curl \
 ```
 
 Check the Data Source in the Styra DAS UI.  A new Data Source with the name `mygitdatasource` will appear in the UI, with the following contents:
-```
+```json
 {
   "_data": {
     "bardata": {
@@ -175,8 +175,8 @@ Check the Data Source in the Styra DAS UI.  A new Data Source with the name `myg
 The `_data`, `_packages` and `_signatures` fields are special metadata fields maintained by Styra DAS.  The raw JSON data (e.g. `bardata` and `foodata`) will be visible.
 
 ### 6. Import the Data Sources into the Policy
-The `rules.rego` file within this repository contains example rules that demonstrate importing data from the Data Sources (both Rest-based and Git-based), and using the data within policy rules
-```
+The `mysystem/policy-code/rules/rules.rego` file within this repository contains example rules that demonstrate importing data from the Data Sources (both Rest-based and Git-based), and using the data within policy rules
+```rego
 package rules
 
 import data.dataset as restdatasource
