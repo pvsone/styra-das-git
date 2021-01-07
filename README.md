@@ -1,5 +1,8 @@
 # das-git
 
+An example to demonstrate how to connect a Styra DAS Custom System to Git for both Rego policy and JSON data.
+
+## Setup
 Set environment variables for use in the `curl` commands in the steps below:
 ```
 export STYRA_ORGANIZATION_ID="<TENANT>.styra.com"
