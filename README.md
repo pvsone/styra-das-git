@@ -52,7 +52,7 @@ curl \
   -d @system.json
 ```
 
-### (Optional) 3. Update the default Rest-based Data Source
+### 3. (Optional) Update the default Rest-based Data Source
 For a Custom System type, Styra DAS creates a default Rest-based Data Source named `dataset`, which can be updated via the Styra DAS API:
 ```
 # get the system id for the created system, either from the JSON of the system create command, or from the DAS UI.
@@ -79,7 +79,7 @@ Styra DAS will begin to synchronize the Rego policy files into `mysystem`.  With
 }
 ```
 
-### (Optional) 4. Create another Rest-based Data Source
+### 4. (Optional) Create another Rest-based Data Source
 You can create as many Data Sources as you like.  Rest-based Data Sources can be created via the UI or via the DAS API, and will be fully visible in the UI.
 ```
 curl -X PUT \
