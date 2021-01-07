@@ -8,7 +8,7 @@ export STYRA_TOKEN="<API_TOKEN>"
 
 ## Create a Git-backed System through the API
 
-_Reference doc:_ https://TENANT.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
+_Reference doc (replace TENANT with your tenant name):_ https://TENANT.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
 
 ### 1. Create a Styra Secret for your Git credentials
 ```
