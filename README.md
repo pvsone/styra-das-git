@@ -21,6 +21,8 @@ curl -X PUT \
   "https://${STYRA_ORGANIZATION_ID}/v1/secrets/mygitsecret" \
   -d '{ "name": "pvsone", "secret": "<GIT-ACCESS-TOKEN>" }'
 ```
+* Update the `name` and `secret` values as appropriate for your environment.
+* The secret will be named `mygitsecret`.  You can provide any name value you prefer.
 
 ### 2. Create a Custom System with Git integration enabled
 ```
@@ -38,7 +40,11 @@ cat <<EOF > system.json
   }
 }
 EOF
+```
+* Update the `url` and `path` (and any other) values as appropriate for your environment.
+* The system will be named `mysystem`.  You can provide any name value you prefer.
 
+```
 curl \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
   -H "Content-Type: application/json" \
@@ -108,6 +114,7 @@ curl -X PUT \
   "https://${STYRA_ORGANIZATION_ID}/v1/datasources/systems/${STYRA_SYSTEM_ID}/mygitdatasource" \
   -d @datasource.json
 ```
+* The datasource will be named `mygitdatasource`.  You can provide any name value you prefer.
 
 Check the Status of the Data Source via the API.  Look for a `status.code` value of `finished`.
 ```
