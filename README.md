@@ -11,7 +11,7 @@ export STYRA_TOKEN="<API_TOKEN>"
 
 ## Create a Git-backed System through the API
 
-_Reference doc (replace TENANT with your tenant name):_ https://TENANT.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
+_Reference doc:_ https://docs.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
 
 ### 1. Create a Styra Secret for your Git credentials
 ```bash
@@ -52,8 +52,8 @@ curl \
   -d @system.json
 ```
 
-### 3. (Optional) Update the default Rest-based Data Source
-For a Custom System type, Styra DAS creates a default Rest-based Data Source named `dataset`, which can be updated via the Styra DAS API:
+### 3. (Optional) Update the default REST-based Data Source
+For a Custom System type, Styra DAS creates a default REST-based Data Source named `dataset`, which can be updated via the Styra DAS API:
 ```bash
 # get the system id for the created system, either from the JSON of the system create command, or from the DAS UI.
 export STYRA_SYSTEM_ID=<mysystem-id-value>
@@ -79,8 +79,8 @@ Styra DAS will begin to synchronize the Rego policy files into `mysystem`.  With
 }
 ```
 
-### 4. (Optional) Create another Rest-based Data Source
-You can create as many Data Sources as you like.  Rest-based Data Sources can be created via the UI or via the DAS API, and will be fully visible in the UI.
+### 4. (Optional) Create another REST-based Data Source
+You can create as many Data Sources as you like.  REST-based Data Sources can be created via the UI or via the DAS API, and will be fully visible in the UI.
 ```bash
 curl -X PUT \
   -H "Authorization: Bearer ${STYRA_TOKEN}" \
@@ -91,10 +91,31 @@ curl -X PUT \
 
 Note that the Data Source name, e.g. `anotherds`, can also be a path-based value, e.g `path/to/mydatasource`, and if so, the Data Source will be shown in the DAS UI with the respective folder hierarchy.
 
+Publish Data to the Data Source
+```bash
+curl -X PUT \
+  -H "Authorization: Bearer ${STYRA_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "https://${STYRA_ORGANIZATION_ID}/v1/data/systems/${STYRA_SYSTEM_ID}/anotherds" \
+  -d '{ "baz": "qux", "foo": "bar" }'
+```
+
+Patch Data in the Data Source using [JSON Patch](http://jsonpatch.com)
+```bash
+curl -X PATCH \
+  -H "Authorization: Bearer ${STYRA_TOKEN}" \
+  -H "Content-Type: application/json-patch+json" \
+  "https://${STYRA_ORGANIZATION_ID}/v1/data/systems/${STYRA_SYSTEM_ID}/anotherds" \
+  -d '[
+    { "op": "replace", "path": "/baz", "value": "boo" },
+    { "op": "add", "path": "/hello", "value": ["world"] },
+    { "op": "remove", "path": "/foo" }
+  ]'
+```
 
 ### 5. Create a Git-based Data Source
 
-_Reference doc:_ https://TENANT.styra.com/v1/docs/policy-authoring/datasources/overview/#git-data-sources
+_Reference doc:_ https://docs.styra.com/v1/docs/policy-authoring/datasources/overview/#git-data-sources
 
 ```bash
 cat <<EOF > datasource.json
