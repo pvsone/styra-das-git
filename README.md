@@ -11,7 +11,7 @@ export STYRA_TOKEN="<API_TOKEN>"
 
 ## Create a Git-backed System through the API
 
-_Reference doc:_ https://docs.styra.com/v1/docs/policy-organization/systems/using-git-storage/#create-a-git-backed-system-through-the-api 
+_Reference doc:_ https://docs.styra.com/v1/docs/policies/git-management/use-git-storage-systems/
 
 ### 1. Create a Styra Secret for your Git credentials
 ```bash
@@ -115,7 +115,7 @@ curl -X PATCH \
 
 ### 5. Create a Git-based Data Source
 
-_Reference doc:_ https://docs.styra.com/v1/docs/policy-authoring/datasources/overview/#git-data-sources
+_Reference doc:_ https://docs.styra.com/v1/docs/policies/policy-authoring/datasources/supported-types/git/
 
 ```bash
 cat <<EOF > datasource.json
