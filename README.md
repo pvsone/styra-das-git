@@ -115,7 +115,7 @@ curl -X PATCH \
 
 ### 5. Create a Git-based Data Source
 
-_Reference doc:_ https://docs.styra.com/v1/docs/policies/policy-authoring/datasources/supported-types/git/
+_Reference doc:_ https://docs.styra.com/policies/policy-authoring/datasources/supported-types/bundle-git
 
 ```bash
 cat <<EOF > datasource.json
